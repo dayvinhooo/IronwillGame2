@@ -1,6 +1,9 @@
 {
 	"version": 1,
 	"flameworkVersion": "1.2.3",
-	"identifiers": {},
+	"identifiers": {
+		"ironwillgame2:out/server/Services/stateManager@State": "server/Services/stateManager@State",
+		"ironwillgame2:out/shared/Networking@GlobalEvents": "shared/Networking@GlobalEvents"
+	},
 	"metadata": {}
 }
