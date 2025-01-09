@@ -1,3 +1,14 @@
-import { makeHello } from "shared/module";
+import { entityManagerAwake } from "server/Services/entityManager";
+import { stateManagerAwake } from "server/Services/stateManager";
 
-print(makeHello("main.server.ts"));
+// Disable and clean up the script
+const myScript = script as Script;
+myScript.Disabled = true;
+task.defer(coroutine.running());
+coroutine.yield();
+script.Destroy();
+
+
+// Initialize managers
+entityManagerAwake();
+stateManagerAwake();
