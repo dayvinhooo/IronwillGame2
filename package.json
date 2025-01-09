@@ -18,7 +18,7 @@
     "eslint": "^8.57.1",
     "eslint-plugin-roblox-ts": "^0.0.36",
     "rbxts-transformer-flamework": "^1.2.3",
-    "roblox-ts": "^3.0.0-dev-d48bd20",
+    "roblox-ts": "^3.0.0",
     "typescript": "^5.5.3"
   },
   "dependencies": {
