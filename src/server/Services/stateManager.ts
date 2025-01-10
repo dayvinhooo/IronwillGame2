@@ -25,7 +25,7 @@ class State {
 	// private maxMana: number;
 	// private mana: number;
 
-    private inCombat: boolean = false;
+    //private inCombat: boolean = false; // not sure about this
 	private isStunned: boolean = false;
 	private isKnocked: boolean = false;
 	private hasiFrame: boolean = false;
@@ -37,13 +37,22 @@ class State {
 	private blockCD: boolean = false;
 	private criticalCD: boolean = false;
 	private rollCD: boolean = false;
+
     private isBlocking: boolean = false;
 	private isParrying: boolean = false;
+	private isFeinting: boolean = false;
+	private isAttacking: boolean = false;
 
-	//private charPos: Vector3 = new Vector3();
+	private statusEffects: string[] = []
+
+	// private latestm1 = os.clock()
+	// private latestFeint = os.clock()
+	private latestDmgDealt: number = 0
+	private latestMove: {[key: string]: number} = {} // the number type referred here is os.clock()
+	private equippedWeapon: string = "Undefined"
 
 	private moveSet = new Map<string, boolean>();
-	private Connections: { [key: string]: RBXScriptConnection | RBXScriptSignal | undefined } = {};
+	private Connections: { [key: string]: RBXScriptConnection | undefined } = {};
 
     constructor(receivedCharacter: Model) {
 		// Setting the character & player
@@ -91,7 +100,7 @@ class State {
 
 		this.Connections.onDeath = this._stateHumanoid.Died.Connect(() => {
 
-			print("death");
+			// print("death");
 			this.Destroy();
 		});
     }
@@ -100,13 +109,13 @@ class State {
 		// Disconnect connections here
 
 		if (this._statePlayer) {
-            print(stateTable)
+          //  print(stateTable)
             }
         }
 
         public RunConnections(): void {
             this.TrackHealth();
-            print(this.Connections);
+           // print(this.Connections);
         }
     
 }
@@ -130,15 +139,16 @@ function stateManagerStart(): void {
 		// Determine if the child added to the folder is an ai or a player
 		if (Player?.IsA("Player")) {
 			warn("got plr");
-			if (!stateTable.has(Player.UserId)) {
+			if (!stateTable.has(Player.UserId) && child.FindFirstChild("Humanoid")) {
 				new State(child as Model);
 			}
-		} else {
+		} else if (!stateTable.has(child as Model) && child.FindFirstChild("Humanoid")) {
 			warn("got ai");
-			if (!stateTable.has(child as Model)) {
 				new State(child as Model);
-			}
 		}
+        else {
+            return;
+        }
 	});
 
 	CharFolder.ChildRemoved.Connect((child) => {
@@ -148,6 +158,8 @@ function stateManagerStart(): void {
 				print("removed", child);
 			}
 		}
+
+        print(child)
 	});
 }
 
