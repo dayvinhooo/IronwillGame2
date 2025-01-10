@@ -25,7 +25,7 @@ class State {
 	// private maxMana: number;
 	// private mana: number;
 
-    private inCombat: boolean = false;
+    //private inCombat: boolean = false; // not sure about this
 	private isStunned: boolean = false;
 	private isKnocked: boolean = false;
 	private hasiFrame: boolean = false;
@@ -52,7 +52,7 @@ class State {
 	private equippedWeapon: string = "Undefined"
 
 	private moveSet = new Map<string, boolean>();
-	private Connections: { [key: string]: RBXScriptConnection | RBXScriptSignal | undefined } = {};
+	private Connections: { [key: string]: RBXScriptConnection | undefined } = {};
 
     constructor(receivedCharacter: Model) {
 		// Setting the character & player
@@ -100,7 +100,7 @@ class State {
 
 		this.Connections.onDeath = this._stateHumanoid.Died.Connect(() => {
 
-			print("death");
+			// print("death");
 			this.Destroy();
 		});
     }
@@ -109,13 +109,13 @@ class State {
 		// Disconnect connections here
 
 		if (this._statePlayer) {
-            print(stateTable)
+          //  print(stateTable)
             }
         }
 
         public RunConnections(): void {
             this.TrackHealth();
-            print(this.Connections);
+           // print(this.Connections);
         }
     
 }

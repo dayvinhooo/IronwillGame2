@@ -49,6 +49,9 @@ interface Stats {
 interface CharacterData {
     Character: Model | undefined;
     Stats: Map<string, number>
+    InCombat: boolean
+    IsKnocked: boolean
+    Lives: number
     Race: string
     Age: number
     Location: string;
@@ -79,6 +82,14 @@ export interface template {
     Inventory: Inventory;
     CharacterData: CharacterData;
     CurrentSessionData: CurrentSessionData;
+}
+
+export interface mockTemplate {
+    PlayerProfile: PlayerProfile;
+    ProgressionData: ProgressionData;
+    Inventory: Inventory;
+    CharacterData: CharacterData;
+    CurrentSessionData: CurrentSessionData;  
 }
 /* 
 NOTE: ALL THE NUMBER VALUES ARE PLACE HOLDER FOR NOW AS THEY ARE NOT IMPORTANT FOR CURRENT STAGE OF DEVELOPMENT
@@ -132,11 +143,69 @@ export const dataTemp: template = {
 
     CharacterData: {
 		["Character"]: undefined,
+        ["InCombat"]: false,
+        ["IsKnocked"]: false,
+        ["Lives"]:  2,
         ["Age"]: 17,
         ["Race"]: "", 
         ["Stats"]: baseStats,
 		["Location"]: "Undefined",
 		["CharacterCF"]: {x: 0, y: 0, z: 0}, 
+
+        ["UniqueAbilities"]: [], // []
+        ["CatalystAbilities"]: [], // []
+        ["BattleOutcomes"]: {} 
+	},
+    CurrentSessionData: {
+        ["TimePlayed"]: 0,
+        ["LastCF"]: {x: 0, y: 0, z: 0}
+    }
+
+}
+
+export const mockDataTemp: mockTemplate = {
+    PlayerProfile: {
+        ["AccountAge"]: 0,
+        ["TotalTimePlayed"]: 0,
+        // ["LastLogin"]:  ,
+        ["OwnedPasses"]: [], 
+        ["BanHistory"]: {},
+        ["GuildData"]: {
+            ["GuildName"]: "Undefined",
+            ["GuildID"]: 0
+        },
+    }, 
+
+    ProgressionData: {
+        ["Level"]: 30,
+        ["XP"]: 0,
+        ["XP_Threshold"]: { // this is unofficial
+            Min: 99,
+            Max: 99999
+        },
+        ["Achievements"]: [],
+        ["QuestsCompleted"]: [],
+        ["ActiveQuests"]: [] // []
+    },
+
+    Inventory: {
+        ["Items"]: {}, 
+        ["Currency"]: {
+            Gold: 999999999,
+            Gems: 999999999
+        }
+    },
+
+    CharacterData: {
+		["Character"]: undefined,
+        ["InCombat"]: false,
+        ["IsKnocked"]: false,
+        ["Lives"]:  2,
+        ["Age"]: 17,
+        ["Race"]: "", 
+        ["Stats"]: baseStats,
+		["Location"]: "Undefined",
+		["CharacterCF"]: new CFrame(), 
 
         ["UniqueAbilities"]: [], // []
         ["CatalystAbilities"]: [], // []
