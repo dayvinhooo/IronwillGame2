@@ -37,10 +37,19 @@ class State {
 	private blockCD: boolean = false;
 	private criticalCD: boolean = false;
 	private rollCD: boolean = false;
+
     private isBlocking: boolean = false;
 	private isParrying: boolean = false;
+	private isFeinting: boolean = false;
+	private isAttacking: boolean = false;
 
-	//private charPos: Vector3 = new Vector3();
+	private statusEffects: string[] = []
+
+	// private latestm1 = os.clock()
+	// private latestFeint = os.clock()
+	private latestDmgDealt: number = 0
+	private latestMove: {[key: string]: number} = {} // the number type referred here is os.clock()
+	private equippedWeapon: string = "Undefined"
 
 	private moveSet = new Map<string, boolean>();
 	private Connections: { [key: string]: RBXScriptConnection | RBXScriptSignal | undefined } = {};
@@ -130,15 +139,16 @@ function stateManagerStart(): void {
 		// Determine if the child added to the folder is an ai or a player
 		if (Player?.IsA("Player")) {
 			warn("got plr");
-			if (!stateTable.has(Player.UserId)) {
+			if (!stateTable.has(Player.UserId) && child.FindFirstChild("Humanoid")) {
 				new State(child as Model);
 			}
-		} else {
+		} else if (!stateTable.has(child as Model) && child.FindFirstChild("Humanoid")) {
 			warn("got ai");
-			if (!stateTable.has(child as Model)) {
 				new State(child as Model);
-			}
 		}
+        else {
+            return;
+        }
 	});
 
 	CharFolder.ChildRemoved.Connect((child) => {
@@ -148,6 +158,8 @@ function stateManagerStart(): void {
 				print("removed", child);
 			}
 		}
+
+        print(child)
 	});
 }
 
