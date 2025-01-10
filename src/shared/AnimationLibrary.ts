@@ -1,4 +1,6 @@
-type AnimationPack = Record<string, Animation | Animation[] | [Animation, number][]>; // If the value type is the latter, the animations in the table are picked at random.//
+type RandomAnimation = [Animation, number][]; //Instance, Weight
+type Emote = [(Animation | RandomAnimation), boolean, number?]; //Instance, Looped, Weight
+type AnimationPack = Record<string, Animation | RandomAnimation | Emote>; // If the value type is the latter, the animations in the table are picked at random.//
 
 interface AnimationLibraryPreface {
 	Animations: Record<string, Animation>;
@@ -25,7 +27,7 @@ AnimationPacks["Default"] = {
 	["FallImpact"]: newAnimation(16704151376),
 	["Climb"]: newAnimation(16661799074),
 	["Sit"]: newAnimation(178130996), //Default Roblox Animation//
-    ["Swim"]: newAnimation(180426354),
+    ["Swim"]: newAnimation(180426354), //Default Roblox Animation//
 
 	//Basic Combat Animations//
 	["Block"]: newAnimation(16704025701),
@@ -34,15 +36,28 @@ AnimationPacks["Default"] = {
 
 	//Dodging Animations//
 	["SpotDodge"]: [
-		[newAnimation(16661765223), 1], //Spot Dodge 1//
-		[newAnimation(17847866674), 1], //Spot Dodge 2//
-		[newAnimation(17847939690), 1], //Spot Dodge 3//
+		[newAnimation(16661765223), 10], //Spot Dodge 1//
+		[newAnimation(17847866674), 10], //Spot Dodge 2//
+		[newAnimation(17847939690), 10], //Spot Dodge 3//
 	],
 	["ForwardDodge"]: newAnimation(16661781705),
 	["BackwardDodge"]: newAnimation(16661766673),
 	["LeftwardDodge"]: newAnimation(16661771130),
 	["RightwardDodge"]: newAnimation(16661783062),
 };
+
+AnimationPacks["Classic"] = {
+		//Roblox Default Animations//
+		["Idle"]: [
+			[newAnimation(180435571), 9], //Default Roblox Animation//
+			[newAnimation(180435792), 1], //Default Roblox Animation//
+		], 
+		["Walk"]: newAnimation(180426354), //Default Roblox Animation//
+		["Jump"]: newAnimation(125750702), //Default Roblox Animation//
+		["Fall"]: newAnimation(180436148), //Default Roblox Animation//
+		["Climb"]: newAnimation(180436334), //Default Roblox Animation//
+		["Sit"]: newAnimation(178130996), //Default Roblox Animation//
+}
 
 AnimationPacks["Crouch"] = {
 	["Idle"]: newAnimation(16661714976),
@@ -51,20 +66,32 @@ AnimationPacks["Crouch"] = {
 
 AnimationPacks["Emotes"] = {
 	//Roblox Default//
-	["Wave"]: newAnimation(128777973),
-	["Point"]: newAnimation(128853357),
+	["wave"]: [newAnimation(128777973), false], //Default Roblox Animation//
+	["point"]: [newAnimation(128853357), false], //Default Roblox Animation//
 
-	["Dance1"]: [newAnimation(182435998), newAnimation(182491037), newAnimation(182491065)],
-	["Dance2"]: [newAnimation(182436842), newAnimation(182491248), newAnimation(182491277)],
-	["Dance3"]: [newAnimation(182436935), newAnimation(182491368), newAnimation(182491423)],
+	["dance1"]: [[
+		[newAnimation(182435998), 10], //Default Roblox Animation//
+		[newAnimation(182491037), 10], //Default Roblox Animation//
+		[newAnimation(182491065), 10], //Default Roblox Animation//
+	], true], 
+	["dance2"]: [[
+		[newAnimation(182436842), 10], //Default Roblox Animation//
+		[newAnimation(182491248), 10], //Default Roblox Animation//
+		[newAnimation(182491277), 10], //Default Roblox Animation//
+	], true],
+	["dance3"]: [[
+		[newAnimation(182436935), 10], //Default Roblox Animation//
+		[newAnimation(182491368), 10], //Default Roblox Animation//
+		[newAnimation(182491423), 10], //Default Roblox Animation//
+	], true],
 
-	["Laugh"]: newAnimation(129423131),
-	["Cheer"]: newAnimation(129423030),
+	["laugh"]: [newAnimation(129423131), false], //Default Roblox Animation//
+	["cheer"]: [newAnimation(129423030), false], //Default Roblox Animation//
 
 	//Custom Emotes//
-	["Hakari"]: newAnimation(17228139677),
-	["SitDown"]: newAnimation(17228366839),
-	["ToleTole"]: newAnimation(17267447673),
+	["hakari"]: [newAnimation(17228139677), true],
+	["sitDown"]: [newAnimation(17228366839), true],
+	["toletole"]: [newAnimation(17267447673), true],
 };
 
 export = { Animations, AnimationPacks };
